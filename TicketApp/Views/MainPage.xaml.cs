@@ -1,23 +1,24 @@
-﻿namespace TicketApp;
+﻿using TicketApp.ViewModels;
+
+namespace TicketApp.Views;
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
-
-    public MainPage()
+    private readonly MainPageVm _viewModel;
+    public MainPage(MainPageVm vm)
     {
         InitializeComponent();
+        BindingContext = vm;
+        _viewModel = vm;
     }
 
-    private void OnCounterClicked(object? sender, EventArgs e)
+    protected override async void OnAppearing()
     {
-        count++;
-
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+        base.OnAppearing();
+        
+        if (_viewModel.LoadEventsCommand.CanExecute(null))
+        {
+            await _viewModel.LoadEventsCommand.ExecuteAsync(null);
+        }
     }
 }

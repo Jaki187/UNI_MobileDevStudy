@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging;
 using TicketApp.Services;
+using TicketApp.Views;
 using TicketApp.ViewModels;
 
 namespace TicketApp;
@@ -23,6 +24,9 @@ public static class MauiProgram
             
             builder.Services.AddSingleton<MainPageVm>();
             builder.Services.AddSingleton<MainPage>();
+            
+            builder.Services.AddSingleton<AddEventPageVm>();
+            builder.Services.AddSingleton<AddEventPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

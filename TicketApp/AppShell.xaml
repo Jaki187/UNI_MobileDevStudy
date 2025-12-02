@@ -3,8 +3,9 @@
     x:Class="TicketApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:TicketApp"
-    Title="TicketApp">
+    xmlns:local="clr-namespace:TicketApp.Views"
+    Title="TicketApp"
+    Shell.BackgroundColor="#1edce3">
 
     <ShellContent
         Title="Home"
