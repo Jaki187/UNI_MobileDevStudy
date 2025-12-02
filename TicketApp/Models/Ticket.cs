@@ -17,7 +17,7 @@ public partial class Ticket: ObservableObject
         
     public string Email { get; set; }
   
-    public string SecretCode { get; set; } 
+    public string Code { get; set; } 
     
     public bool IsCheckedIn { get; set; }  
         

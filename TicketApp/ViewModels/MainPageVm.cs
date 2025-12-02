@@ -3,12 +3,15 @@ using CommunityToolkit.Mvvm.Input;
 using TicketApp.Models;
 using TicketApp.Services;
 
-public partial class MainPageVm : ObservableObject
+namespace TicketApp.ViewModels
 {
-    public readonly EventService _eventService;
-    
-    public MainPageVm(EventService eventService)
+    public partial class MainPageVm : ObservableObject
     {
-        _eventService = eventService;
+        public readonly EventService _eventService;
+
+        public MainPageVm(EventService eventService)
+        {
+            _eventService = eventService;
+        }
     }
 }

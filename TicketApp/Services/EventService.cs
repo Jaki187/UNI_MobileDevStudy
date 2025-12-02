@@ -5,28 +5,49 @@ namespace TicketApp.Services;
 
 public class EventService
 {
-    SQLiteAsyncConnection database;
+    SQLiteAsyncConnection _database;
 
     public interface IEventService
     {
-        Task<IEnumerable<Event>> GetAllEventsAsync();
-        
+        Task<List<Event>> GetAllEventsAsync();
+        Task AddEventAsync(Event newEvent);
+        Task DeleteEventAsync(int eventId);
+        Task<Event> GetEventByIdAsync(int eventId);
+
     }
     
     
     private async Task Init()
     {
-        if (database is not null)
+        if (_database is not null)
             return;
 
-        database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-        var result = await database.CreateTableAsync<Event>();
+        _database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
+        var result = await _database.CreateTableAsync<Event>();
     }
     
     
-    public async Task<IEnumerable<Event>> GetAllEventsAsync()
+    public async Task<List<Event>> GetAllEventsAsync()
     {
         await Init();
-        return await database.Table<Event>().ToListAsync();
+        return await _database.Table<Event>().ToListAsync();
+    }
+
+    public async Task AddEventAsync(Event newEvent)
+    {
+        await Init();
+        await _database.InsertAsync(newEvent);
+    }
+
+    public async Task DeleteEventAsync(int eventId)
+    {
+        await Init();
+        await _database.DeleteAsync<Event>(eventId);
+    }
+
+    public async Task<Event> GetEventByIdAsync(int eventId)
+    {
+        await Init();
+        return await _database.Table<Event>().Where(x => x.Id == eventId).FirstOrDefaultAsync();
     }
 }
