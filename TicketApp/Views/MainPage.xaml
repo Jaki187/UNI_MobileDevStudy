@@ -12,7 +12,7 @@
 
         <CollectionView Grid.Row="0" 
                         ItemsSource="{Binding Events}"
-                        SelectionMode="Single">
+                        SelectionMode="None">
             
             <CollectionView.EmptyView>
                 <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
@@ -26,34 +26,54 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Event">
-                    <Frame Margin="0,0,0,10" 
-                           Padding="15" 
-                           CornerRadius="12" 
-                           HasShadow="True" 
-                           BackgroundColor="White"
-                           BorderColor="Transparent">
-                        
-                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
-                            <Label Grid.Row="0" Grid.Column="0" 
-                                   Text="{Binding Name}" 
-                                   FontSize="18" 
-                                   FontAttributes="Bold" 
-                                   TextColor="#333333"/>
+                    
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Delete" 
+                                           BackgroundColor="#FF3B30"
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageVm}}, Path=DeleteEventCommand}"
+                                           CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
 
-                            <Label Grid.Row="0" Grid.Column="1" 
-                                   Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" 
-                                   TextColor="#666666" 
-                                   FontSize="14"
-                                   HorizontalOptions="End"/>
+                        <Frame Margin="0,0,0,12" 
+                               Padding="15" 
+                               CornerRadius="12" 
+                               HasShadow="True" 
+                               BackgroundColor="White"
+                               BorderColor="Transparent">
 
-                            <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5,0,0">
-                                <Label Text="📍 " FontSize="12"/>
-                                <Label Text="{Binding Location}" 
-                                       FontSize="13" 
-                                       TextColor="#888888"/>
-                            </HorizontalStackLayout>
-                        </Grid>
-                    </Frame>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainPageVm}}, Path=GoToDetailsCommand}"
+                                    CommandParameter="{Binding .}"
+                                    NumberOfTapsRequired="1" />
+                            </Frame.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto">
+                                <Label Grid.Row="0" Grid.Column="0" 
+                                       Text="{Binding Name}" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#333333"/>
+
+                                <Label Grid.Row="0" Grid.Column="1" 
+                                       Text="{Binding Date, StringFormat='{0:MM/dd/yyyy}'}" 
+                                       TextColor="#666666" 
+                                       FontSize="14"
+                                       HorizontalOptions="End"/>
+
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,5,0,0" Spacing="5">
+                                    <Label Text="📍" FontSize="12"/>
+                                    <Label Text="{Binding Location}" 
+                                           FontSize="13" 
+                                           TextColor="#888888"/>
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </SwipeView>
+                    
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

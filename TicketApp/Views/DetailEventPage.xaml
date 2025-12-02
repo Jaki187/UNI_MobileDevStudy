@@ -1,7 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="TicketApp.Views.DetailEventPage">
-    
-</ContentView>
+             xmlns:vm="clr-namespace:TicketApp.ViewModels"
+             xmlns:models="clr-namespace:TicketApp.Models"
+             x:Class="TicketApp.Views.DetailEventPage"
+             x:DataType="vm:DetailEventPageVm"
+             Title="Guest List"
+             BackgroundColor="#F0F0F0">
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="15" RowSpacing="10">
+
+        <Frame Grid.Row="0" 
+               BackgroundColor="White" 
+               CornerRadius="12" 
+               HasShadow="False" 
+               BorderColor="Transparent">
+            <VerticalStackLayout Spacing="5">
+                <Label Text="{Binding Event.Name}" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       TextColor="#333"/>
+                
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="📅" FontSize="14"/>
+                    <Label Text="{Binding Event.Date, StringFormat='{0:MM/dd/yyyy HH:mm}'}" TextColor="Gray"/>
+                </HorizontalStackLayout>
+                
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="📍" FontSize="14"/>
+                    <Label Text="{Binding Event.Location}" TextColor="Gray"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding Tickets}" 
+                        SelectionMode="None">
+            
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                    <Label Text="🎟️" FontSize="40" HorizontalOptions="Center"/>
+                    <Label Text="No guests yet." TextColor="Gray" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Ticket">
+                    
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Delete" 
+                                           BackgroundColor="#FF3B30" 
+                                           Command="{Binding Source={RelativeSource AncestorType={x:Type vm:DetailEventPageVm}}, Path=DeleteTicketCommand}"
+                                           CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Frame Margin="0,5" Padding="15" CornerRadius="10" BackgroundColor="White" BorderColor="Transparent" HasShadow="False">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                    <Label Text="{Binding GuestName}" 
+                                           FontSize="16" 
+                                           FontAttributes="Bold" 
+                                           TextColor="Black"/>
+                                    <Label Text="{Binding SecretCode}" 
+                                           FontSize="10" 
+                                           TextColor="Gray" 
+                                           LineBreakMode="TailTruncation"/>
+                                </VerticalStackLayout>
+
+                                <Label Grid.Column="1" 
+                                       Text="O" 
+                                       TextColor="Gray"
+                                       FontSize="18"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                        </Frame>
+                    </SwipeView>
+                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="2" 
+                Text="+ Add Guest" 
+                Command="{Binding AddGuestCommand}"
+                BackgroundColor="#1edce3" 
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="25"
+                HeightRequest="50"
+                Margin="0,5,0,5"
+                Shadow="{Shadow Brush=Black, Offset='2,2', Opacity=0.2}"/>
+    </Grid>
+
+</ContentPage>

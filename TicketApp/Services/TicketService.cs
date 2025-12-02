@@ -24,7 +24,9 @@ public class TicketService
             return;
 
         _database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-        var result = await _database.CreateTableAsync<Ticket>();
+        
+        await _database.CreateTableAsync<Ticket>();
+        await _database.CreateTableAsync<Event>();
     }
 
     public async Task<List<Ticket>> GetTicketsForEventAsync(int eventId)

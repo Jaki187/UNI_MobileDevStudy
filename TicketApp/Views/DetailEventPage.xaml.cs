@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TicketApp.ViewModels;
 
 namespace TicketApp.Views;
 
-public partial class DetailEventPage : ContentView
+public partial class DetailEventPage : ContentPage
 {
-    public DetailEventPage()
+    public DetailEventPage(DetailEventPageVm vm)
     {
         InitializeComponent();
+        BindingContext = vm;
     }
 }
