@@ -50,7 +50,7 @@ public class TicketService
     public async Task<Ticket> GetTicketByCodeAsync(string code)
     {
         await Init();
-        return await _database.Table<Ticket>().Where(x => x.Code == code).FirstOrDefaultAsync();
+        return await _database.Table<Ticket>().Where(x => x.SecretCode == code).FirstOrDefaultAsync();
     }
 
     public async Task UpdateTicketStatusAsync(Ticket ticket)

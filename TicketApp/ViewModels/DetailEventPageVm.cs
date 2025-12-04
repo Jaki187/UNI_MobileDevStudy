@@ -1,7 +1,9 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Maui.Views;
 using TicketApp.Models;
+using TicketApp.Views;
 using TicketApp.Services;
 
 namespace TicketApp.ViewModels
@@ -45,22 +47,28 @@ namespace TicketApp.ViewModels
         [RelayCommand]
         public async Task AddGuestAsync()
         {
-            string guestName = await Shell.Current.DisplayPromptAsync("New Guest", "Guest name:");
+            if (Event == null) return;
 
-            if (string.IsNullOrWhiteSpace(guestName)) return;
+            // Wir erstellen das Pop-up und übergeben die EventId an das ViewModel
+            // Annahme: Dein TicketService muss über DI bezogen werden (empfohlen)
+            var ticketService = Shell.Current.Handler.MauiContext.Services.GetService<TicketService>();
+    
+            // 1. Instanzierung von ViewModel und Popup
+            var popupVm = new AddTicketPopupVm(ticketService, Event.Id); 
+            var popup = new AddTicketPopup { BindingContext = popupVm };
 
-            var newTicket = new Ticket
+            // 2. Zeige das Pop-up und warte auf das Ergebnis
+            var result = await Shell.Current.CurrentPage.ShowPopupAsync(popup);
+    
+            // 3. Ergebnis verarbeiten
+            if (result is Ticket newTicket && newTicket.SecretCode != null)
             {
-                EventId = Event.Id,
-                GuestName = guestName,
-                Code = Guid.NewGuid().ToString(), // Generiert den QR-Code Inhalt
-                IsCheckedIn = false
-            };
-            
-            await _ticketService.AddTicketAsync(newTicket);
-
-            Tickets.Add(newTicket);
+                // Ticket wurde im Pop-up-ViewModel generiert und zurückgegeben
+                await _ticketService.AddTicketAsync(newTicket);
+                Tickets.Add(newTicket);
+            }
         }
+        
         
         [RelayCommand]
         public async Task DeleteTicketAsync(Ticket ticket)

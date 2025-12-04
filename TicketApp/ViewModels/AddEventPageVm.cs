@@ -39,6 +39,9 @@ namespace TicketApp.ViewModels
             };
 
             await _eventService.AddEventAsync(newEvent);
+            
+            ClearForm();
+            
             await Shell.Current.GoToAsync("..");
         }
 
@@ -46,6 +49,17 @@ namespace TicketApp.ViewModels
         public async Task CancelAsync()
         {
             await Shell.Current.GoToAsync("..");
+            ClearForm();
+        }
+        
+        
+        private void ClearForm()
+        {
+            Name = string.Empty;
+            Location = string.Empty;
+            Description = string.Empty;
+            EventDate = DateTime.Now;
+            EventTime = DateTime.Now.TimeOfDay;
         }
     }
 }

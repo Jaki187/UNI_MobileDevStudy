@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging;
 using TicketApp.Services;
+using CommunityToolkit.Maui;
 using TicketApp.Views;
 using TicketApp.ViewModels;
 
@@ -13,6 +14,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -27,7 +29,12 @@ public static class MauiProgram
             
             builder.Services.AddSingleton<AddEventPageVm>();
             builder.Services.AddSingleton<AddEventPage>();
+            
+            builder.Services.AddSingleton<DetailEventPageVm>();
+            builder.Services.AddSingleton<DetailEventPage>();
 
+            builder.Services.AddTransient<AddTicketPopupVm>();
+            builder.Services.AddTransient<AddTicketPopup>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
