@@ -4,7 +4,7 @@ using CommunityToolkit.Maui.Views;
 using TicketApp.Models;
 using TicketApp.Services;
 
-namespace TicketApp.ViewModels
+namespace TicketApp.ViewModels   
 {
     // Die Klasse muss von ObservableObject erben
     public partial class AddTicketPopupVm : ObservableObject
