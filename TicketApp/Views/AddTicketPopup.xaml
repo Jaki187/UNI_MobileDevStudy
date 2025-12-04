@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:vm="clr-namespace:TicketApp.ViewModels"
+               x:Class="TicketApp.Views.AddTicketPopup"
+               x:DataType="vm:AddTicketPopupVm"
+               Color="Transparent">
+    
+    <Frame WidthRequest="300" 
+           CornerRadius="10" 
+           Padding="20" 
+           BackgroundColor="White">
+        
+        <VerticalStackLayout Spacing="15">
+
+            <Label Text="Add New Guest" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   TextColor="#333"
+                   HorizontalOptions="Center"/>
+            
+            <Entry Placeholder="Guest Name (e.g., Max Mustermann)" 
+                   Text="{Binding GuestName}" 
+                   Keyboard="Text"
+                   ReturnType="Next"/>
+            
+            <Entry Placeholder="Email (optional)" 
+                   Text="{Binding Email}" 
+                   Keyboard="Email"
+                   ReturnType="Done"/>
+            
+            <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+                
+                <Button Text="Cancel" 
+                        Command="{Binding CancelCommand}"
+                        CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type toolkit:Popup}}}"
+                        BackgroundColor="LightGray" 
+                        TextColor="Black"
+                        CornerRadius="8"
+                        HorizontalOptions="FillAndExpand"/>
+                
+                <Button Text="Save" 
+                        Command="{Binding SaveTicketCommand}"
+                        CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type toolkit:Popup}}}"
+                        BackgroundColor="#1edce3" 
+                        TextColor="White"
+                        CornerRadius="8"
+                        HorizontalOptions="FillAndExpand"/>
+            </HorizontalStackLayout>
+            
+        </VerticalStackLayout>
+    </Frame>
+</toolkit:Popup>
