@@ -21,7 +21,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
         
-            builder.Services.AddSingleton<EventService>();
+            builder.Services.AddSingleton<IEventService, EventService>();
             builder.Services.AddSingleton<ITicketService, TicketService>();
             
             builder.Services.AddSingleton<MainPageVm>();
@@ -35,6 +35,10 @@ public static class MauiProgram
 
             builder.Services.AddTransient<AddTicketPopupVm>();
             builder.Services.AddTransient<AddTicketPopup>();
+            
+            builder.Services.AddSingleton<QrCodeService>();
+            builder.Services.AddTransient<QrCodePageVm>(); 
+            builder.Services.AddTransient<QrCodePage>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

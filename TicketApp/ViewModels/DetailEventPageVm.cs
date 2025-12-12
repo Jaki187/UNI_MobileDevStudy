@@ -48,13 +48,8 @@ namespace TicketApp.ViewModels
         public async Task AddGuestAsync()
         {
             if (Event == null) return;
-
-            // Wir erstellen das Pop-up und übergeben die EventId an das ViewModel
-            // Annahme: Dein TicketService muss über DI bezogen werden (empfohlen)
-            var ticketService = Shell.Current.Handler.MauiContext.Services.GetService<TicketService>();
-    
             // 1. Instanzierung von ViewModel und Popup
-            var popupVm = new AddTicketPopupVm(ticketService, Event.Id); 
+            var popupVm = new AddTicketPopupVm(_ticketService, Event.Id); 
             var popup = new AddTicketPopup { BindingContext = popupVm };
 
             // 2. Zeige das Pop-up und warte auf das Ergebnis

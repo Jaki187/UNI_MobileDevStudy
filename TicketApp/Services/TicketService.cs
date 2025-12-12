@@ -63,8 +63,7 @@ public class TicketService: ITicketService
     public async Task<int> GetGuestCountAsync(int eventId)
     {
         await Init();
-        return await _database.Table<Event>().Where(x => x.Id == eventId).CountAsync();
-    }
+        return await _database.Table<Ticket>().Where(x => x.EventId == eventId).CountAsync();    }
     
     
     

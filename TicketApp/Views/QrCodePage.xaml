@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:TicketApp.ViewModels"
+             x:DataType="viewmodels:QrCodePageVm"
+             x:Class="TicketApp.Views.QrCodePage"
+             Title="{Binding GuestName}"
+             Shell.NavBarIsVisible="True"
+             BackgroundColor="{AppThemeBinding Dark=Black, Light=White}"> 
+    
+    <VerticalStackLayout Spacing="30" Padding="30" HorizontalOptions="Center" VerticalOptions="Center">
+
+        <Label Text="{Binding GuestName}" 
+               FontSize="Title" 
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <Frame HasShadow="True" Padding="0" CornerRadius="10" 
+               BackgroundColor="White" 
+               BorderColor="Black"
+               WidthRequest="420" HeightRequest="420">
+            
+            <Image Source="{Binding QrCodeImageSource}" 
+                   HeightRequest="400" 
+                   WidthRequest="400"
+                   BackgroundColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+        </Frame>
+
+        <Label Text="{Binding TicketCode}"
+               HorizontalOptions="Center" 
+               FontSize="Medium"
+               FontAttributes="Italic"
+               Margin="0, -20, 0, 0" />
+
+        <Label Text="Bitte scannen lassen" 
+               FontSize="Subtitle"
+               HorizontalOptions="Center" />
+        
+    </VerticalStackLayout>
+</ContentPage>
