@@ -3,20 +3,21 @@ using SQLite;
 
 namespace TicketApp.Services;
 
-public class TicketService
+
+public interface ITicketService
+{
+    Task<List<Ticket>> GetTicketsForEventAsync(int eventId);
+    Task AddTicketAsync(Ticket newTicket);
+    Task DeleteTicketAsync(int ticketId);
+    Task<Ticket> GetTicketByCodeAsync(string code);
+    Task UpdateTicketStatusAsync(Ticket ticket);
+    Task<int> GetGuestCountAsync(int eventId);
+        
+}
+
+public class TicketService: ITicketService
 {
     SQLiteAsyncConnection _database;
-    
-    public interface ITicketService
-    {
-        Task<List<Ticket>> GetTicketsForEventAsync(int eventId);
-        Task AddTicketAsync(Ticket newTicket);
-        Task DeleteTicketAsync(int ticketId);
-        Task<Ticket> GetTicketByCodeAsync(string code);
-        Task UpdateTicketStatusAsync(Ticket ticket);
-        Task<int> GetGuestCountAsync(int eventId);
-        
-    }
     
     private async Task Init()
     {
@@ -64,4 +65,7 @@ public class TicketService
         await Init();
         return await _database.Table<Event>().Where(x => x.Id == eventId).CountAsync();
     }
+    
+    
+    
 }

@@ -3,18 +3,19 @@ using SQLite;
 
 namespace TicketApp.Services;
 
-public class EventService
+
+public interface IEventService
+{
+    Task<List<Event>> GetAllEventsAsync();
+    Task AddEventAsync(Event newEvent);
+    Task DeleteEventAsync(int eventId);
+    Task<Event> GetEventByIdAsync(int eventId);
+
+}
+
+public class EventService: IEventService
 {
     SQLiteAsyncConnection _database;
-
-    public interface IEventService
-    {
-        Task<List<Event>> GetAllEventsAsync();
-        Task AddEventAsync(Event newEvent);
-        Task DeleteEventAsync(int eventId);
-        Task<Event> GetEventByIdAsync(int eventId);
-
-    }
     
     
     private async Task Init()

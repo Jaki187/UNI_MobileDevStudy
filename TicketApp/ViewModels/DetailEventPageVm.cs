@@ -11,13 +11,13 @@ namespace TicketApp.ViewModels
     [QueryProperty(nameof(Event), "Event")]
     public partial class DetailEventPageVm : ObservableObject
     {
-        private readonly TicketService _ticketService;
+        private readonly ITicketService _ticketService;
         
         [ObservableProperty] private Event _event;
         
         public ObservableCollection<Ticket> Tickets { get; } = new();
 
-        public DetailEventPageVm(TicketService ticketService)
+        public DetailEventPageVm(ITicketService ticketService)
         {
             _ticketService = ticketService;
         }

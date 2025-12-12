@@ -7,9 +7,9 @@ namespace TicketApp.ViewModels
 {
     public partial class AddEventPageVm : ObservableObject
     {
-        private readonly EventService _eventService;
+        private readonly IEventService _eventService;
 
-        public AddEventPageVm(EventService eventService)
+        public AddEventPageVm(IEventService eventService)
         {
             _eventService = eventService;
             

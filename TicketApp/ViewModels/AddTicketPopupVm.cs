@@ -12,7 +12,7 @@ namespace TicketApp.ViewModels
         // HINWEIS: _ticketService wird hier nicht benötigt, da das Hinzufügen 
         // in DetailEventPageVm nach dem Schließen des Popups erfolgt. 
         // Wir behalten es aber, falls es für andere Logik genutzt wird.
-        private readonly TicketService _ticketService;
+        private readonly ITicketService _ticketService;
         private readonly int _eventId; // Speichert die ID des aktuellen Events
         
         // Properties für die Eingabe des Benutzers
@@ -23,7 +23,7 @@ namespace TicketApp.ViewModels
         private string _email = string.Empty;
 
         // 💡 Korrigierter Konstruktor, der die 2 Parameter annimmt
-        public AddTicketPopupVm(TicketService ticketService, int eventId)
+        public AddTicketPopupVm(ITicketService ticketService, int eventId)
         {
             // Speichere die übergebenen Abhängigkeiten/Daten
             _ticketService = ticketService;

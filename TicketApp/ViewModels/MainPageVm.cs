@@ -9,11 +9,11 @@ namespace TicketApp.ViewModels
 {
     public partial class MainPageVm : ObservableObject
     {
-        private readonly EventService _eventService;
+        private readonly IEventService _eventService;
         
         public ObservableCollection<Event> Events { get; } = new();
         
-        public MainPageVm(EventService eventService)
+        public MainPageVm(IEventService eventService)
         {
             _eventService = eventService;
         }

@@ -22,7 +22,7 @@ public static class MauiProgram
             });
         
             builder.Services.AddSingleton<EventService>();
-            builder.Services.AddSingleton<TicketService>();
+            builder.Services.AddSingleton<ITicketService, TicketService>();
             
             builder.Services.AddSingleton<MainPageVm>();
             builder.Services.AddSingleton<MainPage>();
